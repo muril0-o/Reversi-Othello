@@ -2,6 +2,9 @@ import random
 import pygame
 import pygame.freetype  # Importa o módulo freetype.
 
+font_size = 20
+
+
 # Define os possíveis estados para cada espaço
 EMPTY = ' '
 WHITE = 'W'
@@ -28,14 +31,14 @@ pygame.init()
 width, height = 60, 60
 
 # Define o tamanho da grade
-grid = [width, height]
+grid = [width + 5, height + 5]
 
 # Define o tamanho da janela
 size = [grid[0] * 8, grid[1] * 8]
 screen = pygame.display.set_mode(size)
 
 # Define o título da tela
-pygame.display.set_caption("Reversi")
+pygame.display.set_caption("Reversi-Othello Game")
 
 done = False
 
@@ -49,7 +52,7 @@ font = pygame.freetype.SysFont(None, 24)
 turn = random.choice([WHITE, BLACK])
 
 def is_valid_move(board, row, col, player):
-  if board[row][col] != EMPTY:
+  if board[row - 5][col - 5] != EMPTY:
       return False
   
   opponent = WHITE if player == BLACK else BLACK
@@ -72,7 +75,7 @@ def is_valid_move(board, row, col, player):
 
 def make_move(board, row, col, player):
     # Coloca a peça no tabuleiro
-    board[row][col] = player
+    board[row - 5][col - 5] = player
     # Vira as peças do oponente
     for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]:
         r, c = row + dr, col + dc
@@ -138,9 +141,18 @@ while not done:
         pygame.draw.line(screen, (0,0,0), (0,y), (size[0],y), 2)
 
     # Escreve a linha e as colunas
+    font = pygame.font.Font(None, font_size)
+
     for i in range(8):
-        font.render_to(screen, (width * i + width // 2, 10), chr(65 + i), (200, 200, 200))  # Rótulos das colunas
-        font.render_to(screen, (10, height * i + height // 2), str(1 + i), (200, 200, 200))  # Rótulos das linhas
+            # Rótulos das colunas (letras)
+        col_label = font.render(chr(65 + i), True, (200, 200, 200))
+        col_label_rect = col_label.get_rect(center=(width * i + width // 2, font_size // 2 + 488))
+        screen.blit(col_label, col_label_rect)
+
+        # Rótulos das linhas (números)
+        row_label = font.render(str(1 + i), True, (200, 200, 200))
+        row_label_rect = row_label.get_rect(center=(font_size // 2 + 488, height * i + height // 2))
+        screen.blit(row_label, row_label_rect)
 
     # Verifica se o jogo terminou
     if game_over(board):

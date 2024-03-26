@@ -8,7 +8,7 @@ Esta é uma implementação em Python do jogo Reversi-Othello. Abaixo você enco
 O objetivo do Reversi-Othello é ter mais peças da sua cor no tabuleiro do que o seu oponente ao final do jogo.
 
 ### Jogadores
-- 2 jogadores
+- 2 jogadores (1 Humano VS 1 Computador)
 
 ### Peças
 - 64 peças, cada uma com um lado preto e um lado branco.
@@ -31,7 +31,7 @@ O objetivo do Reversi-Othello é ter mais peças da sua cor no tabuleiro do que 
 ## Executando o Projeto
 
 ### Requisitos
-- Python 3.x
+- Python 3.4.2
 - Biblioteca Pygame
 
 ### Passos
